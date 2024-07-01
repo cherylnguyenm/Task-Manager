@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-<h1>My To do List</h1>
-<table>
-    <tr>
-        <th>Item</th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <td>{{task.title}}</td>
-        <td><a href="{% url 'task-detail' task.id %}">View</a></td>
-    </tr>
-    {% empty %}
-        <h3> Item list is empty</h3>
-    {% endfor %}
-</table>
+    <h1>My To do List</h1>
+    <a href="{% url 'task-create' %}">Add Task</a>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th></th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{task.title}}</td>
+            <td><a href="{% url 'task-detail' task.id %}">View</a></td>
+            <td><a href="{% url 'task-detail' task.id %}">View</a></td>
+        </tr>
+        {% empty %}
+            <h3> Item list is empty</h3>
+        {% endfor %}
+    </table>
 </html>
