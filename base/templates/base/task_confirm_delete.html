@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+    <a href="{% url 'task-list' %}"></a>
+    <form method="POST">
+        {% csrf_token %}
+        <p> Delete this task? "{{task}}"</p>
+        <input type="submit" value="Delete"/>
+    </form>
+</html>
