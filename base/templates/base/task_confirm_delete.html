@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <a href="{% url 'task-list' %}"></a>
+    <a href="{% url 'task-list' %}">Go Back</a>
     <form method="POST">
         {% csrf_token %}
-        <p> Delete this task? "{{task}}"</p>
+        <p> Delete this task? "{{task_info}}"</p>
         <input type="submit" value="Delete"/>
     </form>
 </html>
