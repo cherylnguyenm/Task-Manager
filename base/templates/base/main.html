@@ -16,7 +16,9 @@
         <!-- Template Main CSS File -->
         {% load static %}
 
-        <link rel="stylesheet" href="{% static 'base/style.css' %}">
+        <!-- main.html -->
+        <link href="{% static 'base/style.css' %}?v={{ STATIC_VERSION }}" rel="stylesheet">
+
 
     </head>
      <!-- //HEAD -->
