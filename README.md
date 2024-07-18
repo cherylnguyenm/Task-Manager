@@ -10,7 +10,7 @@ Task Manager is a Django-based web application designed to manage tasks efficien
 - **Responsive Design:** Ensures compatibility across various devices.
 - **Efficient Data Handling:** Utilizes Django's class-based views for streamlined data management.
 
-## Technologies Used
+<h2><code style="color : blue">Technologies</code></h2>
 
 - **Backend:** Django, Python
 - **Frontend:** HTML, CSS
@@ -18,7 +18,17 @@ Task Manager is a Django-based web application designed to manage tasks efficien
 
 <h2><code style="color : blue">Installation</code></h2>
 
-1. Clone the repository:
+<b>1. Clone the repository:</b>
    ```bash
-   git clone https://github.com/yourusername/webtask-manager.git
+   git clone https://github.com/cherylnguyenm/webtask-manager.git
    cd webtask-manager
+
+<b>2. Create and activate a virtual environment:</b>
+### Mac:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  
+
+### Windows:
+    ```bash 
+    venv\Scripts\activate
