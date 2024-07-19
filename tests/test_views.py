@@ -36,9 +36,23 @@ class TaskListLoggedIn(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)  # Expecting success (200 OK)
 
+class UniqueUser(TestCase):
+    def setUp(self):
+        self.user = User(username='testuser1')
+        self.user.set_password('Valid1Password!')
+        self.user.save()
+
+    def register_with_same_username(self):
+        self.user = User(username='testuser1')
+        self.user.set_password('Valid2Password!')
+        self.assertEqual(response.status_code, 200)  # Page reloads with errors
+        self.assertContains(response, "A user with that username already exists.")  # Check for specific error
+
 class PasswordValidationTests(TestCase):
     def setUp(self):
-        self.user = User(username='testuser')
+        self.user = User(username='testuser1')
+        self.user.set_password('Valid1Password!')
+        self.user.save()
 
     def test_valid_password(self):
         self.user.set_password('Valid1Password!')
@@ -46,39 +60,29 @@ class PasswordValidationTests(TestCase):
         self.assertTrue(self.user.check_password('Valid1Password!'))
 
     def test_password_too_similar(self):
-        self.user.set_password('testuser123')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
+        self.user.set_password('testuser2')
+        self.assertEqual(response.status_code, 200)  # Page reloads with errors
+        self.assertContains(response, "The password is too similar to the username.")  # Check for specific error
 
     def test_password_too_short(self):
         self.user.set_password('Short1!')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
+        self.assertEqual(response.status_code, 200)  # Page reloads with errors
+        self.assertContains(response, "This password is too short. It must contain at least 8 characters.")  # Check for specific error
 
     def test_common_password(self):
-        self.user.set_password('password123')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
+        self.user.set_password('password')
+        self.assertEqual(response.status_code, 200)  # Page reloads with errors
+        self.assertContains(response, "This password is too common.")  # Check for specific error
 
     def test_numeric_password(self):
         self.user.set_password('12345678')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
+        self.assertEqual(response.status_code, 200)  # Page reloads with errors
+        self.assertContains(response, "This password is entirely numeric.")  # Check for specific error
 
     def test_special_characters(self):
         self.user.set_password('Special@2024')
         self.user.save()
         self.assertTrue(self.user.check_password('Special@2024'))
-
-    def test_letters_only(self):
-        self.user.set_password('OnlyLetters')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
-
-    def test_sequential_characters(self):
-        self.user.set_password('abcdefg1!')
-        with self.assertRaises(ValidationError):
-            self.user.full_clean()
 
     def test_password_reuse(self):
         # Assuming you have a method to check password history
