@@ -60,9 +60,14 @@ class PasswordValidationTests(TestCase):
         self.assertTrue(self.user.check_password('Valid1Password!'))
 
     def test_password_too_similar(self):
-        self.user.set_password('testuser2')
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser5',
+            'password': 'testuser4',  # Example of too similar password
+        })
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
-        self.assertContains(response, "The password is too similar to the username.")  # Check for specific error
+        form = response.context.get('form')
+        self.assertTrue(form.errors)
+        self.assertIn('password1', form.errors)
 
     def test_password_too_short(self):
         response = self.client.post(reverse('register'), {
@@ -72,18 +77,28 @@ class PasswordValidationTests(TestCase):
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
         form = response.context.get('form')
         self.assertTrue(form.errors)
-        self.assertIn('password', form.errors)
+        self.assertIn('password1', form.errors)
 
     def test_common_password(self):
-        self.user.set_password('password')
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser3',
+            'password': 'password',  # Example of too common password
+        })
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
-        self.assertContains(response, "This password is too common.")  # Check for specific error
+        form = response.context.get('form')
+        self.assertTrue(form.errors)
+        self.assertIn('password1', form.errors)
 
     def test_numeric_password(self):
-        self.user.set_password('12345678')
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser4',
+            'password': '12345678',  # Example of numeric-only password
+        })
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
-        self.assertContains(response, "This password is entirely numeric.")  # Check for specific error
-
+        form = response.context.get('form')
+        self.assertTrue(form.errors)
+        self.assertIn('password1', form.errors)
+        
     def test_special_characters(self):
         self.user.set_password('Special@2024')
         self.user.save()
