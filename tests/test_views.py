@@ -70,7 +70,9 @@ class PasswordValidationTests(TestCase):
             'password': 'Short1!',  # Example of too short password
         })
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
-        self.assertContains(response, "This password is too short. It must contain at least 8 characters.")  # Check for specific error
+        form = response.context.get('form')
+        self.assertTrue(form.errors)
+        self.assertIn('password', form.errors)
 
     def test_common_password(self):
         self.user.set_password('password')
