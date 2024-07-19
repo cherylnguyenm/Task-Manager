@@ -28,12 +28,12 @@ class TaskListLoggedIn(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)  # Expecting success (200 OK)
 
-    # registered user + incorrect pw
-    # def loggedInIncorrectPW(self): 
-    #     self.client.login(username='testuser', password='wrongpassword')
-    #     url = reverse('task-list')
-    #     response = self.client.get(url)
-    #     self.assertEqual(response.status_code, 401)  # Expecting 401 Unauthorized
+    registered user + incorrect pw
+    def loggedInIncorrectPW(self): 
+        self.client.login(username='testuser', password='wrongpassword')
+        url = reverse('task-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 401)  # Expecting 401 Unauthorized
 
 class TaskDetailTestCase(TestCase):
     def setUp(self):
