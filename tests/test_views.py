@@ -65,7 +65,10 @@ class PasswordValidationTests(TestCase):
         self.assertContains(response, "The password is too similar to the username.")  # Check for specific error
 
     def test_password_too_short(self):
-        self.user.set_password('Short1!')
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'password': 'Short1!',  # Example of too short password
+        })
         self.assertEqual(response.status_code, 200)  # Page reloads with errors
         self.assertContains(response, "This password is too short. It must contain at least 8 characters.")  # Check for specific error
 
