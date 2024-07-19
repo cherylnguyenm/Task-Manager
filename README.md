@@ -18,17 +18,35 @@ Task Manager is a Django-based web application designed to manage tasks efficien
 
 <h2><code>Installation</code></h2>
 
-<b>1. Clone the repository:</b>
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/cherylnguyenm/project_django.git
-   cd project_django
+   mkdir <i>dir_name</i>
+   git clone https://github.com/cherylnguyenm/Task-Manager.git
+   cd <i>dir_name</i>
 
-<b>2. Create and activate a virtual environment:</b>
-### Mac:
+2. **Create and activate a virtual environment:**
+    Mac:
     ```bash
     python -m venv env
     source env/bin/activate  
+    ```
 
-### Windows:
+    Windows:
     ```bash 
-    venv\Scripts\activate
+    python -m venv env
+    env\Scripts\activate
+     ```
+
+3. **Install required packages:**
+    ```bash 
+    pip install -r requirements.txt
+    ```
+
+4. **Run the development server:**
+    ```bash 
+    cd todo
+    python manage.py runserver
+    ```
+
+<h2><code>Contact</code></h2>
+Should you have any concerns, please contact<a href="mailto:chauanhmnguyen@gmail.com"> chauanhmnguyen@gmail.com</a>
