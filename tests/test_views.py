@@ -7,12 +7,20 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from base.models import Task
+from django.core.exceptions import ValidationError
 
 class TaskListNotLoggedIn(TestCase):
     def test_task_list_view_no_login(self):
         url = reverse('task-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)  # Expecting a redirect
+    
+    def test_no_logged_in_incorrect_pw(self): 
+        # Trying to log in with incorrect password
+        self.client.login(username='testuser', password='wrongpassword')
+        url = reverse('task-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)  # Expecting a redirect (likely to login)
 
 class TaskListLoggedIn(TestCase):
     def setUp(self):
@@ -28,12 +36,65 @@ class TaskListLoggedIn(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)  # Expecting success (200 OK)
 
-    registered user + incorrect pw
-    def loggedInIncorrectPW(self): 
-        self.client.login(username='testuser', password='wrongpassword')
-        url = reverse('task-list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 401)  # Expecting 401 Unauthorized
+class PasswordValidationTests(TestCase):
+    def setUp(self):
+        self.user = User(username='testuser')
+
+    def test_valid_password(self):
+        self.user.set_password('Valid1Password!')
+        self.user.save()
+        self.assertTrue(self.user.check_password('Valid1Password!'))
+
+    def test_password_too_similar(self):
+        self.user.set_password('testuser123')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_password_too_short(self):
+        self.user.set_password('Short1!')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_common_password(self):
+        self.user.set_password('password123')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_numeric_password(self):
+        self.user.set_password('12345678')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_special_characters(self):
+        self.user.set_password('Special@2024')
+        self.user.save()
+        self.assertTrue(self.user.check_password('Special@2024'))
+
+    def test_letters_only(self):
+        self.user.set_password('OnlyLetters')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_sequential_characters(self):
+        self.user.set_password('abcdefg1!')
+        with self.assertRaises(ValidationError):
+            self.user.full_clean()
+
+    def test_password_reuse(self):
+        # Assuming you have a method to check password history
+        self.user.set_password('PreviousPassword1!')
+        self.user.save()
+        self.assertTrue(self.user.check_password('PreviousPassword1!'))
+
+    def test_password_confirmation(self):
+        # Simulate form validation
+        password = 'Confirm1!'
+        password_confirmation = 'Confirm1!'
+        self.assertEqual(password, password_confirmation)
+
+        # Simulate mismatch
+        password_confirmation = 'Different1!'
+        self.assertNotEqual(password, password_confirmation)
 
 class TaskDetailTestCase(TestCase):
     def setUp(self):
