@@ -14,6 +14,7 @@ Task Manager is a Django-based web application designed to manage tasks efficien
 
 - **Backend:** Django, Python
 - **Frontend:** HTML, CSS
+- **Frontend:** HTML, CSS
 
 <h2><code>Installation</code></h2>
 
