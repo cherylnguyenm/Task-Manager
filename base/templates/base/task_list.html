@@ -7,23 +7,27 @@
             <h1>Welcome <span class="username">{{ request.user.username|title }}</span></h1>
             <h3>You have <i>{{ count }}</i> incomplete task{{ count|pluralize:"s" }}</h3>
         </div>
-
+        <div class="button-1">
         {% if request.user.is_authenticated %}
             <a href="{% url 'logout' %}" class="button-1">Logout</a>
+        </div>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
         {% endif %}
     </div>
 </div>
 
-<h1>My List</h1>
+<div class="first-title">
+    <h1><i>My List</i></h1>
+</div>
 
 <div class="search-add-wrapper">
-    <form method="GET" style="margin-top: 20px; display: flex;">
+    <form method="GET" style="margin-top: 10px; display: flex;">
         <input type='text' name='search-field' value="{{search_input}}">
         <input class="button" type="submit" value="Search">
     </form>  
-    <a id="add" href="{% url 'task-create' %}">&#x2b;</a>
+    <a id="add" href="{% url 'task-create' %}">&#x2b;<span class="popover">Create a new task</span></a>
+    
 </div>
 
 <div class="to-do">
@@ -34,14 +38,14 @@
             <div class="task-complete-icon"></div>
             <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>   
         </div>
-        <a id="delete" href="{% url 'task-delete' task.id %}">&cross;</a>
+        <a id="delete" href="{% url 'task-delete' task.id %}">&#x2718;</a>
 
         {% else %}
         <div class="task-title">
             <div class="task-incomplete-icon"></div>
             <a href="{% url 'task-update' task.id %}">{{task}}</a>
         </div>
-        <a id="delete" href="{% url 'task-delete' task.id %}">&cross;</a>
+        <a id="delete" href="{% url 'task-delete' task.id %}">&#x2718;</a>
         {% endif %}
     </div>
 
