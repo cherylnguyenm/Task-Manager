@@ -49,11 +49,5 @@ Task Manager is a Django-based web application designed to manage tasks efficien
     python manage.py runserver
     ```
 
-4. **Run test
-    ```bash 
-    cd todo
-    python manage.py test base.tests
-    ```
-
 <h2><code>Contact</code></h2>
 Should you have any concerns, please contact<a href="mailto:chauanhmnguyen@gmail.com"> chauanhmnguyen@gmail.com</a>
