@@ -126,6 +126,7 @@ coverage.xml
 # Other sensitive files
 *.env
 .env.*
+todo/base/tests.py
 
 # Django static files
 staticfiles/

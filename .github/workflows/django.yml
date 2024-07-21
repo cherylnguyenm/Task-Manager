@@ -29,5 +29,7 @@ jobs:
         fi
         pip install Django==4.2.13 pytest==8.2.2 pytest-django==4.8.0 sqlparse==0.5.0
     - name: Run Tests
+      env:
+        DJANGO_SETTINGS_MODULE: todo.settings
       run: |
-        python manage.py test base.tests
+        python manage.py test base.tests --verbosity=2 --timeout=300
