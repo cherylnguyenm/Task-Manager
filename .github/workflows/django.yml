@@ -23,15 +23,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [[ ${{ matrix.python-version }} == '3.7' ]]; then
-          echo "asgiref==3.7.2" > requirements.txt
+          pip install asgiref==3.7.2
         else
-          echo "asgiref==3.8.1" > requirements.txt
+          pip install asgiref==3.8.1
         fi
-        echo "Django==4.2.13" >> requirements.txt
-        echo "pytest==8.2.2" >> requirements.txt
-        echo "pytest-django==4.8.0" >> requirements.txt
-        echo "sqlparse==0.5.0" >> requirements.txt
-        pip install -r requirements.txt
+        pip install Django==4.2.13 pytest==8.2.2 pytest-django==4.8.0 sqlparse==0.5.0
     - name: Run Tests
       run: |
         python manage.py test base.tests
