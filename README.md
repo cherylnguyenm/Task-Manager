@@ -25,6 +25,7 @@ Task Manager is a Django-based web application designed to manage tasks efficien
    cd <dir_name>
 
 2. **Create and activate a virtual environment:**
+
     Mac:
     ```bash
     python -m venv env
@@ -46,6 +47,12 @@ Task Manager is a Django-based web application designed to manage tasks efficien
     ```bash 
     cd todo
     python manage.py runserver
+    ```
+
+4. **Run test
+    ```bash 
+    cd todo
+    python manage.py test base.tests
     ```
 
 <h2><code>Contact</code></h2>

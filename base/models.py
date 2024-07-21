@@ -14,5 +14,6 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['complete']
+        app_label = 'base'
 
     
