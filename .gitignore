@@ -127,6 +127,7 @@ coverage.xml
 *.env
 .env.*
 todo/base/tests.py
+todo/base/pytest.ini
 
 # Django static files
 staticfiles/
